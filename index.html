@@ -81,7 +81,7 @@
         <div class="inputs">
           <div class="label">Email Address:</div>
           <input type="text" id="email">
-          <input type="submit" id="run" value="run">
+          <div id="run">Run</div>
         </div>
         <div class="profile">
           <div class="left_column">
@@ -108,8 +108,16 @@
                 utc_offset: -1 * new Date().getTimezoneOffset()
             }
         });
+        
+        // query for user when run button is clicked or enter is pressed
+        $('#run').click(function() { run(); });
+        $(document).keypress(function(e) {
+            if (e.which == 13) {
+                run();
+            }
+        });
 
-        $('#run').on('click', function() {
+        function run() {
           var email = $('#email').val();
   
           /* Validation to check if email is blank. If blank, display "no user record found" */
@@ -142,7 +150,7 @@
           
           $('.profile').show();
           
-        });
+        }
     </script>
     </body>
 </html>
