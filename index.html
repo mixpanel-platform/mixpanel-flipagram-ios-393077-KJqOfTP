@@ -112,6 +112,9 @@
     
 
     <script>
+        // focus on email input
+        $('#email').focus();
+        
         _.namespace("mp.report.globals", function() {
             return {
                 utc_offset: -1 * new Date().getTimezoneOffset()
@@ -126,15 +129,13 @@
             }
         });
         
-        // focus on email input
-        $('#email').focus();
-
+        // run function
         function run() {
           var email = $('#email').val();
           
           // hide previous error, if shown
           $('.error').hide();
-  
+          
           /* Validation to check if email is blank. If blank, display "no email address entered" */
           if(email.trim() == ""){
             $(".error").html('<h1 style="text-align: center; padding: 30px 0; font-size: 18px;">No email address entered.</h1>').show();
@@ -145,10 +146,13 @@
             }).done(function(results) {
                 var results = results.values();
                 if (_.isEmpty(results.results)) {
+                    // show error if no user is found
                     $(".error").html('<h1 style="text-align: center; padding: 30px 0; font-size: 18px;">No user record found.</h1>').show();
                 } else {
+                    // show results
+                    $('.profile').show();
                     var record = results.results[0];
-    
+                    
                     var property_list = new mp.engage.widgets.PropertyList().create(
                         $(".user_properties table"),
                         {
@@ -156,15 +160,12 @@
                             initial_values: record.$properties
                         }
                     );
-    
+                    
                     var user_stream = new mp.engage.widgets.UserStream().create($(".stream_container"));
                     user_stream.set_distinct_ids([record.$distinct_id]);
                 }
             });
           }
-          
-          $('.profile').show();
-          
         }
     </script>
     </body>
