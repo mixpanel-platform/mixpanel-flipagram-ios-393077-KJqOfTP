@@ -61,6 +61,9 @@
             .right_column {
               border-left: 0;
             }
+            .error {
+              display: none;
+            }
         </style>
         <link rel="stylesheet" type="text/css" href="media/css/user.css">
         <link rel="stylesheet" type="text/css" href="media/css/proplist.css">
@@ -88,6 +91,7 @@
           <input type="text" id="email">
           <div id="run">Run</div>
         </div>
+        <div class="error"></div>
         <div class="profile">
           <div class="left_column">
               <div class="stream_header">Activity Feed</div>
@@ -127,10 +131,13 @@
 
         function run() {
           var email = $('#email').val();
+          
+          // hide previous error, if shown
+          $('.error').hide();
   
-          /* Validation to check if email is blank. If blank, display "no user record found" */
+          /* Validation to check if email is blank. If blank, display "no email address entered" */
           if(email.trim() == ""){
-            $(".profile").html('<h1 style="text-align: center; padding: 30px 0; font-size: 36px;">No user record found.</h1>');
+            $(".error").html('<h1 style="text-align: center; padding: 30px 0; font-size: 18px;">No email address entered.</h1>').show();
           }
           else {
             var user = MP.api.people({
@@ -138,7 +145,7 @@
             }).done(function(results) {
                 var results = results.values();
                 if (_.isEmpty(results.results)) {
-                    $("body").html('<h1 style="text-align: center; padding: 30px 0; font-size: 36px;">No user record found.</h1>');
+                    $(".error").html('<h1 style="text-align: center; padding: 30px 0; font-size: 18px;">No user record found.</h1>').show();
                 } else {
                     var record = results.results[0];
     
