@@ -135,6 +135,11 @@
             }
         });
         
+        // convert dates to 'yyyy-mm-dd' format
+        function dateToString(d) {
+          return d.toISOString().split('T')[0];
+        }
+        
         // run function
         function run() {
           var distinct_id = $('#distinct_id').val();
@@ -150,8 +155,8 @@
           else {
             var user = MP.api.query('api/2.0/stream/query', {
                 "distinct_ids": '[' + distinct_id + '"]',
-                "from_date": dates.from,
-                "to_date": dates.to,
+                "from_date": dateToString(dates.from),
+                "to_date": dateToString(dates.to),
             }).done(function(results) {
               console.log(results)
                 var results = results.values();
