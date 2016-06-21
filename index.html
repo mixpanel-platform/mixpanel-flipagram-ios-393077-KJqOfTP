@@ -58,14 +58,15 @@
         .profile {
           display: none;
         }
-        .left_column, .right_column {
+        .container {
           border: 1px solid #bdc7d2;
-        }
-        .right_column {
-          border-left: 0;
+          width: 800px;
         }
         .error {
           display: none;
+        }
+        .left_column .stream_container .properties_container .properties_row .properties_cell {
+          width: 399px;
         }
       </style>
       <link rel="stylesheet" type="text/css" href="media/css/user.css">
@@ -97,7 +98,7 @@
       </div>
       <div class="error"></div>
       <div class="profile">
-        <div class="left_column">
+        <div class="container">
             <div class="stream_header">Activity Feed</div>
             <div class="stream_container"></div>
             <div id="no_data_container">
@@ -145,24 +146,24 @@
             $(".error").html('<h1 style="text-align: center; padding: 30px 0; font-size: 18px;">No Distinct ID entered.</h1>').show();
           }
           else {
-            var user = MP.api.query('api/2.0/stream/query', {
-                "distinct_ids": '["' + distinct_id + '"]',
-                "from_date": dateToString(dates.from),
-                "to_date": dateToString(dates.to),
-            }).done(function(response) {
-                var results = response.results;
-                if (_.isEmpty(results.events)) {
-                    // show error if no user is found
-                    $(".error").html('<h1 style="text-align: center; padding: 30px 0; font-size: 18px;">No user record found.</h1>').show();
-                } else {
-                    // show results
-                    $('.profile').show();
-                    var record = results.events;
-                    
                     var user_stream = new mp.engage.widgets.UserStream().create($(".stream_container"));
                     user_stream.set_distinct_ids([distinct_id]);
-                }
-            });
+            // var user = MP.api.query('api/2.0/stream/query', {
+            //     "distinct_ids": '["' + distinct_id + '"]',
+            //     "from_date": dateToString(dates.from),
+            //     "to_date": dateToString(dates.to),
+            // }).done(function(response) {
+            //     var results = response.results;
+            //     if (_.isEmpty(results.events)) {
+            //         // show error if no user is found
+            //         $(".error").html('<h1 style="text-align: center; padding: 30px 0; font-size: 18px;">No user record found.</h1>').show();
+            //     } else {
+            //         // show results
+            //         $('.profile').show();
+            //         var record = results.events;
+                    
+            //     }
+            // });
           }
         }
       </script>
