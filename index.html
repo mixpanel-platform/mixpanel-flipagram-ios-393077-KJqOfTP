@@ -32,6 +32,9 @@
               outline: 0;
               border-color: #5ba7e1;
             }
+            #dates {
+              display: inline-block;
+            }
             #run {
               clear:both;
               vertical-align: 1px;
@@ -87,8 +90,9 @@
     
     <body class="mixpanel-platform-body">
         <div class="inputs">
-          <div class="label">Email Address:</div>
-          <input type="text" placeholder="Email Address" id="email">
+          <div class="label">Distinct ID:</div>
+          <input type="text" placeholder="Distinct ID" id="distinct_id">
+          <div id="dates"></div>
           <div id="run">Run</div>
         </div>
         <div class="error"></div>
@@ -112,6 +116,8 @@
     
 
     <script>
+        // add datepicker
+        $('#dates').MPDatepicker();
         // focus on email input
         $('#email').focus();
         
@@ -131,19 +137,23 @@
         
         // run function
         function run() {
-          var email = $('#email').val();
+          var distinct_id = $('#distinct_id').val();
+          var dates = $('#dates').val();
           
           // hide previous error, if shown
           $('.error').hide();
           
-          /* Validation to check if email is blank. If blank, display "no email address entered" */
+          /* Validation to check if distinct_id is blank. If blank, display "no distinct ID entered" */
           if(email.trim() == ""){
-            $(".error").html('<h1 style="text-align: center; padding: 30px 0; font-size: 18px;">No email address entered.</h1>').show();
+            $(".error").html('<h1 style="text-align: center; padding: 30px 0; font-size: 18px;">No Distinct ID entered.</h1>').show();
           }
           else {
-            var user = MP.api.people({
-                "where": 'properties["$email"] == "' + email + '"'
+            var user = MP.api.query('stream/query', {
+                "distinct_ids": '[' + distinct_id + '"]',
+                "from_date": dates.from,
+                "to_date": dates.to,
             }).done(function(results) {
+              console.log(results)
                 var results = results.values();
                 if (_.isEmpty(results.results)) {
                     // show error if no user is found
