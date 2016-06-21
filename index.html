@@ -148,7 +148,7 @@
             $(".error").html('<h1 style="text-align: center; padding: 30px 0; font-size: 18px;">No Distinct ID entered.</h1>').show();
           }
           else {
-            var user = MP.api.query('stream/query', {
+            var user = MP.api.query('api/2.0/stream/query', {
                 "distinct_ids": '[' + distinct_id + '"]',
                 "from_date": dates.from,
                 "to_date": dates.to,
