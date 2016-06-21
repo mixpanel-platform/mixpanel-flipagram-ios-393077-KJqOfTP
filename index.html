@@ -113,8 +113,10 @@
       </div>
         
       <script>
-        // focus on email input
-        $('#email').focus();
+        $(document).ready(function() {
+          // focus on email input
+          $('#email').focus();
+        });
         
         _.namespace("mp.report.globals", function() {
             return {
