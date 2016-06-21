@@ -154,7 +154,7 @@
           }
           else {
             var user = MP.api.query('api/2.0/stream/query', {
-                "distinct_ids": '[' + distinct_id + '"]',
+                "distinct_ids": '["' + distinct_id + '"]',
                 "from_date": dateToString(dates.from),
                 "to_date": dateToString(dates.to),
             }).done(function(results) {
